@@ -1,4 +1,5 @@
 # apexjs
+```
 const apex = new Apex("API_KEY_HERE")
 apex.getPlayer("theJibbster","PC") //or XBOX or PSN
 .then((response)=>{
@@ -7,3 +8,4 @@ apex.getPlayer("theJibbster","PC") //or XBOX or PSN
 .catch((err)=>{
     console.log(err)
 })
+```
