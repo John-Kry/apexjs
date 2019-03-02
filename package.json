@@ -1,0 +1,28 @@
+{
+  "name": "apexlegendsjs",
+  "version": "1.0.0",
+  "description": "Hits apextracker API using your provided key",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/John-Kryspin/apexjs.git"
+  },
+  "keywords": [
+    "apex",
+    "legends",
+    "api"
+  ],
+  "author": "John Kryspin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/John-Kryspin/apexjs/issues"
+  },
+  "homepage": "https://github.com/John-Kryspin/apexjs#readme"
+}
