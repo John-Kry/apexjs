@@ -20,7 +20,7 @@ apex.getPlayer("playerName","PC") //or XBOX or PSN
 })
 
 //Returns more detailed information about the player
-apex.getDetailedPlayer("playerName","XBOX") //or XBOX or PSN
+apex.getDetailedPlayer("playerName","PC") //or XBOX or PSN
 .then((response)=>{
     console.log(response)
 })
