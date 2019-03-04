@@ -1,8 +1,11 @@
 # apexlegendsjs
 
 Go here to sign up for an API Key: https://apex.tracker.gg/site-api
+
 Then paste your key into API_KEY_HERE
+
 After that, use either the apex.getPlayer() or apex.getDetailedPlayer() functions
+
 ```
 const Apex = require('apexlegendsjs')
 const apex = new Apex("API_KEY_HERE")
