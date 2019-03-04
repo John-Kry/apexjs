@@ -19,6 +19,7 @@ class apexjs {
                     let character = {};
                     character.level = data.metadata.level
                     character.legend_name = data.children[0].metadata.legend_name
+                    character.platformUserHandle = data.metadata.platformUserHandle
                     resolve(character)
                 })
                 .catch((error) => {
