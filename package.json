@@ -1,6 +1,6 @@
 {
   "name": "apexlegendsjs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Hits apextracker API using your provided key",
   "main": "index.js",
   "dependencies": {

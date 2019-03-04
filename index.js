@@ -34,7 +34,7 @@ class apexjs {
             };
             axios.get(url, { headers })
                 .then((response) => {
-                    let data = response.data;
+                    let data = response.data.data;
                     resolve(data)
                 })
                 .catch((error) => {

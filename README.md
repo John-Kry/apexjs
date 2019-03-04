@@ -1,7 +1,23 @@
-# apexjs
+# apexlegendsjs
+
+Go here to sign up for an API Key: https://apex.tracker.gg/site-api
+Then paste your key into API_KEY_HERE
+After that, use either the apex.getPlayer() or apex.getDetailedPlayer() functions
 ```
+const Apex = require('apexlegendsjs')
 const apex = new Apex("API_KEY_HERE")
-apex.getPlayer("theJibbster","PC") //or XBOX or PSN
+
+//Returns basic core statistics about the player
+apex.getPlayer("playerName","PC") //or XBOX or PSN
+.then((response)=>{
+    console.log(response)
+})
+.catch((err)=>{
+    console.log(err)
+})
+
+//Returns more detailed information about the player
+apex.getDetailedPlayer("playerName","XBOX") //or XBOX or PSN
 .then((response)=>{
     console.log(response)
 })
@@ -9,3 +25,4 @@ apex.getPlayer("theJibbster","PC") //or XBOX or PSN
     console.log(err)
 })
 ```
+
