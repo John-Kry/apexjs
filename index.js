@@ -6,8 +6,9 @@ class apexjs {
         this.apiKey = code
     }
     getPlayer(username, platform) {
+        checkInput(username,platform)
         return new Promise((resolve, reject) => {
-            let url = getURL(platform, username)
+            let url = getURL(username, platform)
             const headers = {
                 'Content-Type': 'application/json',
                 'TRN-Api-Key': this.apiKey,
@@ -26,8 +27,9 @@ class apexjs {
         })
     }
     getDetailedPlayer(username, platform) {
+        checkInput(username,platform)
         return new Promise((resolve, reject) => {
-            let url = getURL(platform, username)
+            let url = getURL(username, platform)
             const headers = {
                 'Content-Type': 'application/json',
                 'TRN-Api-Key': this.apiKey,
@@ -43,7 +45,7 @@ class apexjs {
         })
     }
 }
-function getURL(platform, username) {
+function getURL(username, platform) {
     if (platform == "PC") {
         return apexAPIURL + "5/" + username
     }
@@ -54,8 +56,11 @@ function getURL(platform, username) {
         return apexAPIURL + "2/" + username
     }
     else {
-        //default to pc
-        return apexAPIURL + "5/" + username
+        throw Error("Platform must be PC, XBOX, or PSN")
     }
+}
+function checkInput(username, platform){
+    if(typeof username!= "string") throw TypeError("Username must be a string")
+    if(typeof platform!= "string") throw TypeError("Platform must be a string")
 }
 module.exports = apexjs;
