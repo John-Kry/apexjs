@@ -1,67 +1,89 @@
-const axios = require('axios')
-const apexAPIURL = "https://public-api.tracker.gg/apex/v1/standard/profile/"
+const apexAPIURL = "public-api.tracker.gg"
+const https = require('https');
+
 
 class apexjs {
     constructor(code) {
         this.apiKey = code
     }
     getPlayer(username, platform) {
-        checkInput(username,platform)
-        return new Promise((resolve, reject) => {
-            let url = getURL(username, platform)
-            const headers = {
-                'Content-Type': 'application/json',
-                'TRN-Api-Key': this.apiKey,
-            };
-            axios.get(url, { headers })
-                .then((response) => {
-                    let data = response.data.data;
-                    let character = {};
-                    character.level = data.metadata.level
-                    character.legend_name = data.children[0].metadata.legend_name
-                    character.platformUserHandle = data.metadata.platformUserHandle
-                    resolve(character)
-                })
-                .catch((error) => {
-                    reject("Player Not Found")
-                })
+        checkInput([
+            {name:"Username", type: "string" , value:username }, 
+            {name:"Platform", type: "string" , value:platform}
+        ])
+        let $this = this
+        return new Promise( (resolve, reject) => {
+          connectToAPI(username,platform, $this.apiKey, (body, err)=>{
+            if(err) reject("Player not found")
+            let data = body.data
+            let character = {};
+            character.level = data.metadata.level
+            character.legend_name = data.children[0].metadata.legend_name
+            character.platformUserHandle = data.metadata.platformUserHandle
+            resolve(character)
+          })
         })
     }
     getDetailedPlayer(username, platform) {
-        checkInput(username,platform)
+        checkInput([
+            {name:"Username", type: "string" , value:username }, 
+            {name:"Platform", type: "string" , value:platform}
+        ])
         return new Promise((resolve, reject) => {
-            let url = getURL(username, platform)
-            const headers = {
-                'Content-Type': 'application/json',
-                'TRN-Api-Key': this.apiKey,
-            };
-            axios.get(url, { headers })
-                .then((response) => {
-                    let data = response.data.data;
-                    resolve(data)
-                })
-                .catch((error) => {
-                    reject("Player Not Found")
-                })
+            connectToAPI(username,platform, this.apiKey, (body, err)=>{
+                if(err) reject("Player not found")
+                let data = body.data;
+                resolve(data)
+            })
         })
     }
 }
 function getURL(username, platform) {
     if (platform == "PC") {
-        return apexAPIURL + "5/" + username
+        return "/apex/v1/standard/profile/" + "5/" + username
     }
     else if (platform == "XBOX") {
-        return apexAPIURL + "1/" + username
+        return "/apex/v1/standard/profile/"  + "1/" + username
     }
     else if (platform == "PSN") {
-        return apexAPIURL + "2/" + username
+        return "/apex/v1/standard/profile/"  + "2/" + username
     }
     else {
         throw Error("Platform must be PC, XBOX, or PSN")
     }
 }
-function checkInput(username, platform){
-    if(typeof username!= "string") throw TypeError("Username must be a string")
-    if(typeof platform!= "string") throw TypeError("Platform must be a string")
+function connectToAPI(username,platform, apiKey, callback){
+    let url = getURL(username, platform)
+
+    const options = {
+        host: apexAPIURL,
+        port: 443,
+        method: 'GET',
+        path: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'TRN-Api-Key': apiKey,
+        }
+    }
+    const req = https.request(options, (res) => {
+        var body = '';
+        res.on('data', function (chunk) {
+            body += chunk;
+        });
+        res.on('end', ()=>{
+            body = JSON.parse(body)
+            callback(body,null)});
+    })
+    req.on('error', (error) => {
+        console.error(error)
+        callback(null,error)
+    })
+    req.end()
+
+}
+function checkInput(inputs) {
+    for(input of inputs){
+        if(typeof input.value !== input.type) throw TypeError(input.name + " must be a " + input.type)
+    }
 }
 module.exports = apexjs;

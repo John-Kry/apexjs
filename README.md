@@ -1,5 +1,7 @@
 # apexlegendsjs
 
+0 Dependency package that connects to an Apex Legends API
+
 Go here to sign up for an API Key: https://apex.tracker.gg/site-api
 
 Then paste your key into API_KEY_HERE
