@@ -11,9 +11,8 @@ class apexjs {
             {name:"Username", type: "string" , value:username }, 
             {name:"Platform", type: "string" , value:platform}
         ])
-        let $this = this
         return new Promise( (resolve, reject) => {
-          connectToAPI(username,platform, $this.apiKey, (body, err)=>{
+          connectToAPI(username,platform, this.apiKey, (body, err)=>{
             if(err) reject("Player not found")
             let data = body.data
             let character = {};
