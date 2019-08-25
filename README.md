@@ -11,8 +11,7 @@ Then paste your key into API_KEY_HERE
 After that, use either the apex.getPlayer() or apex.getDetailedPlayer() functions
 
 ```
-const Apex = require('apexlegendsjs')
-const apex = new Apex("API_KEY_HERE")
+const apex = require('apexlegendsjs')(API_KEY_HERE)
 
 //Returns basic core statistics about the player
 apex.getPlayer("playerName","PC") //or XBOX or PSN
