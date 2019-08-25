@@ -2,17 +2,16 @@ const apexAPIURL = "public-api.tracker.gg"
 const https = require('https');
 
 
-class apexjs {
-    constructor(code) {
-        this.apiKey = code
-    }
-    getPlayer(username, platform) {
+function apexjs(code){
+    const apiKey = code
+
+    function getPlayer(username, platform) {
         checkInput([
             {name:"Username", type: "string" , value:username }, 
             {name:"Platform", type: "string" , value:platform}
         ])
         return new Promise( (resolve, reject) => {
-          connectToAPI(username,platform, this.apiKey, (body, err)=>{
+          connectToAPI(username,platform, apiKey, (body, err)=>{
             if(err) reject("Player not found")
             let data = body.data
             let character = {};
@@ -23,19 +22,20 @@ class apexjs {
           })
         })
     }
-    getDetailedPlayer(username, platform) {
+    function getDetailedPlayer(username, platform) {
         checkInput([
             {name:"Username", type: "string" , value:username }, 
             {name:"Platform", type: "string" , value:platform}
         ])
         return new Promise((resolve, reject) => {
-            connectToAPI(username,platform, this.apiKey, (body, err)=>{
+            connectToAPI(username,platform, apiKey, (body, err)=>{
                 if(err) reject("Player not found")
                 let data = body.data;
                 resolve(data)
             })
         })
     }
+    return {getPlayer, getDetailedPlayer}
 }
 function getURL(username, platform) {
     if (platform == "PC") {
