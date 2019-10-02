@@ -61,7 +61,7 @@ function connectToAPI(username, platform, apiKey, callback) {
 		}
 	};
 	const req = https.request(options, res => {
-		var body = "";
+		let body = "";
 		res.on("data", function(chunk) {
 			body += chunk;
 		});
