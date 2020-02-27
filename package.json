@@ -1,6 +1,6 @@
 {
   "name": "apexlegendsjs",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Hits apextracker API using your provided key and returns Apex Legends statistics",
   "main": "index.js",
   "dependencies": {},
