@@ -3,9 +3,12 @@
 ![npm](https://img.shields.io/npm/dt/apexlegendsjs)
 
 `npm install apexlegendsjs`
+
 Very light 0 Dependency package that connects to an Apex Legends API
 
 # How to use
+First run `npm install apexlegendsjs`
+
 Go here to sign up for an API Key: https://apex.tracker.gg/site-api
 
 Then paste your key into API_KEY_HERE
