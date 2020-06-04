@@ -4,6 +4,7 @@
 
 0 Dependency package that connects to an Apex Legends API
 
+# How to use
 Go here to sign up for an API Key: https://apex.tracker.gg/site-api
 
 Then paste your key into API_KEY_HERE
@@ -12,6 +13,8 @@ After that, use apex.player() to get core player information.
 The data this returns is listed in the documentation here:https://tracker.gg/developers/docs/titles/apex
 
 Recently Updated to V2 of apex tracker API!
+
+"PLAFORM" needs be either origin, psn, or xbl.
 
 ```js
 const apex = require('apexlegendsjs')(API_KEY_HERE)
@@ -22,3 +25,5 @@ apexjs.playerSessions("playerName", "PLATFORM")
 
 ```
 
+# Created By
+This package was created by John Kryspin.
