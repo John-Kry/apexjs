@@ -18,7 +18,7 @@ Recently Updated to V2 of apex tracker API!
 
 ```js
 const apex = require('apexlegendsjs')(API_KEY_HERE)
-async main(){
+async function main(){
 const profile = await apexjs.profile("playerName", "PLATFORM")
 const playerSegments = await apexjs.playerSegments("playerName", "PLATFORM", "legend")
 const searchResults = await apexjs.search("PLATFORM", "query")
