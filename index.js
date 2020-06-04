@@ -4,47 +4,66 @@ const https = require("https");
 function apexjs(code) {
 	const apiKey = code;
 
-	function getPlayer(username, platform) {
+	/**
+ 	* Returns core profile information
+ 	* @param {("origin"|"xbl"|"psn")} platform - The target platform 
+	* @param {string} username - The target username.
+ 	*/
+	function profile(username, platform) {
 		checkInput([
 			{ name: "Username", type: "string", value: username },
 			{ name: "Platform", type: "string", value: platform }
 		]);
-		return connectToAPI(username, platform, apiKey).then((data) => {
-			let character = {};
-			character.level = data.metadata.level;
-			character.legend_name = data.children[0].metadata.legend_name;
-			character.platformUserHandle = data.metadata.platformUserHandle;
-			return character;
-		});
+		const path = "/v2/apex/standard/profile/" + platform + "/" + username;
+		return sendAPI(path, apiKey)
+
 	}
-	function getDetailedPlayer(username, platform) {
+	/**
+ 	* Get information on a user's segments
+ 	* @param {("origin"|"xbl"|"psn")} platform - The target platform 
+	* @param {string} username - The target username.
+	* @param {("legend"|"others")} segmentType - The type of data attribute.
+ 	*/
+	function playerSegments(username, platform, segmentType) {
 		checkInput([
 			{ name: "Username", type: "string", value: username },
-			{ name: "Platform", type: "string", value: platform }
+			{ name: "Platform", type: "string", value: platform },
+			{ name: "Segment Type", type: "string", value: segmentType }
 		]);
-		return connectToAPI(username, platform, apiKey)
-
+		const path = "/v2/apex/standard/profile/" + platform + "/" + username + "/segments/" + segmentType;
+		return sendAPI(path, apiKey)
 	}
-	return { getPlayer, getDetailedPlayer };
-}
-function getURL(username, platform) {
-	switch (platform) {
-		case "PC":
-			return formatURL("5", username)
-		case "XBOX":
-			return formatURL("1", username)
-		case "PSN":
-			return formatURL("2", username)
-		default:
-			throw new Error("Platform must be PC, XBOX, or PSN");
-
+	/**
+ 	* Search for a user
+ 	* @param {("origin"|"xbl"|"psn")} platform - The target platform 
+ 	* @param {string} query - Search parameter.
+ 	*/
+	function search(platform, query) {
+		checkInput([
+			{ name: "Platform", type: "string", value: platform },
+			{ name: "Query", type: "string", value: query }
+		]);
+		const path = "/v2/apex/standard/search/?platform=" + platform + "&query=" + query
+		return sendAPI(path, apiKey)
 	}
+	/**
+ 	* Returns information about a users session
+ 	* @param {("origin"|"xbl"|"psn")} platform - The target platform 
+	* @param {string} username - The target username.
+ 	*/
+	function playerSessions(username, platform) {
+		checkInput([
+			{ name: "Platform", type: "string", value: platform },
+			{ name: "Username", type: "string", value: username }
+		]);
+		const path = "/v2/apex/standard/profile/" + platform + "/" + username
+		return sendAPI(path, apiKey)
+	}
+	return { profile, playerSegments, search, playerSessions };
 }
-function formatURL(number, username) {
-	return "/apex/v1/standard/profile/" + number + "/" + username;
-}
-function connectToAPI(username, platform, apiKey) {
-	let url = getURL(username, platform);
+
+
+function sendAPI(path, apiKey) {
 
 	return new Promise((resolve, reject) => {
 
@@ -52,7 +71,7 @@ function connectToAPI(username, platform, apiKey) {
 			host: apexAPIURL,
 			port: 443,
 			method: "GET",
-			path: url,
+			path: path,
 			headers: {
 				"Content-Type": "application/json",
 				"TRN-Api-Key": apiKey
@@ -80,6 +99,10 @@ function checkInput(inputs) {
 	for (const input of inputs) {
 		if (typeof input.value !== input.type)
 			throw TypeError(input.name + " must be a " + input.type);
+		if (input.name === "Platform") {
+			if (!["origin", "xbl", "psn"].includes(input.value))
+				throw TypeError(input.name + " must be equal to ['origin', 'xbl', 'psn'], you provided: " + input.value);
+		}
 	}
 }
 module.exports = apexjs;
