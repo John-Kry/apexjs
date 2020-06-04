@@ -2,6 +2,7 @@
 
 ![npm](https://img.shields.io/npm/dt/apexlegendsjs)
 
+`npm install apexlegendsjs`
 Very light 0 Dependency package that connects to an Apex Legends API
 
 # How to use
